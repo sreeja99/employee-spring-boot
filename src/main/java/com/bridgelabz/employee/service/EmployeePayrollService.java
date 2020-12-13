@@ -3,9 +3,11 @@ package com.bridgelabz.employee.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.bridgelabz.employee.dto.EmployeePayrollDTO;
 import com.bridgelabz.employee.model.EmployeePayrollData;
-
+@Service("employeePayrollService")
 public class EmployeePayrollService implements IEmployeePayrollService{
 	
 	public List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
