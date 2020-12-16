@@ -33,7 +33,7 @@ public @ToString class EmployeePayrollDTO {
 	@Pattern(regexp="male|female", message="Gender needs to either male or female")
 	public String gender;
 
-	@JsonFormat(pattern="dd MMM yyyy")
+	@JsonFormat(pattern="dd MM yyyy")
 	@NotNull(message="start date cannot be null")
 	@PastOrPresent(message="start date should be past or today's date")
 	public LocalDate startDate;
