@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +22,12 @@ import com.bridgelabz.employee.dto.ResponseDTO;
 import com.bridgelabz.employee.model.EmployeePayrollData;
 import com.bridgelabz.employee.service.IEmployeePayrollService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500", maxAge = 3600)
 @RequestMapping("/employeepayrollservice")
+@Slf4j
 public class EmployeePayrollController {
 	
 	@Autowired
@@ -46,6 +51,7 @@ public class EmployeePayrollController {
 	
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid@RequestBody EmployeePayrollDTO empPayrollDTO){
+		log.debug("mesg:"+empPayrollDTO.toString());
 		EmployeePayrollData empData=null;
 		empData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Created EmployeePayrollData Succesfully",empData);

@@ -1,14 +1,20 @@
 package com.bridgelabz.employee.dto;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class EmployeePayrollDTO {
+import lombok.ToString;
+
+public @ToString class EmployeePayrollDTO {
 	
 	
-	@NotEmpty(message = "Employee name Invalid")
+	@NotEmpty(message="employee name cannot be null")
+	@Pattern(regexp = "^[A-Z]{1}[A-Za-z\\s]{2,}$", message = "Employee name invalid")
 	public String name;
 	
 	@Min(value=500,message="Min Wage should be more than 500")
@@ -18,10 +24,17 @@ public class EmployeePayrollDTO {
 		this.name = name;
 		this.salary = salary;
 	}
+	public String gender;
 
-	@Override
-	public String toString() {
-		return "EmployeePayrollDTO [name=" + name + ", salary=" + salary + "]";
-	}
+	public LocalDate startDate;
+
+	public String note;
+
+	public String profilePic;
+
+	public List<String> department;
+
+
+	
 	
 }
