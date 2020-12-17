@@ -41,8 +41,8 @@ public class EmployeePayrollController {
 		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);
 	}
 	
-	@GetMapping("/get/{empId}")
-	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empId") int empID){
+	@GetMapping("/get/{empID}")
+	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("empID") int empID){
 		EmployeePayrollData empData=null;
 		empData = employeePayrollService.getEmployeePayrollDataById(empID);
 		ResponseDTO respDTO = new ResponseDTO("GET call for Id succesful",empData);
@@ -68,7 +68,7 @@ public class EmployeePayrollController {
 	}
 	
 	@DeleteMapping("/delete/{empID}")
-	public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empId") int empID){
+	public ResponseEntity<ResponseDTO> deleteEmployeePayrollData(@PathVariable("empID") int empID){
 		employeePayrollService.deleteEmployeePayrollData(empID);
 		ResponseDTO respDTO = new ResponseDTO("Deleted Successfully","Deleted Id:"+empID);
 		return new ResponseEntity<ResponseDTO>(respDTO,HttpStatus.OK);

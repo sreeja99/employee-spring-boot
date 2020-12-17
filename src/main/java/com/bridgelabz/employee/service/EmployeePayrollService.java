@@ -19,16 +19,14 @@ public class EmployeePayrollService implements IEmployeePayrollService{
 	private EmployeePayrollRepository employeeRepository;
 	public List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
 	
-	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
-		 return employeePayrollList;
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollDataById(int empID) {
-		return employeePayrollList.stream().filter(empData -> empData.getEmployeeId() == empID)
-				                   .findFirst()
-				                   .orElseThrow(()->new EmployeePayrollException("Employee not found"));
+		return employeeRepository.findById(empID).
+				orElseThrow(() -> new EmployeePayrollException("Employee with  EmployeeID"+empID+" Does not exists...!!"));
 	}
 
 	@Override
@@ -37,21 +35,23 @@ public class EmployeePayrollService implements IEmployeePayrollService{
 	 empData = new EmployeePayrollData(employeePayrollList.size()+1,empPayrollDTO);
 	 log.debug("Employee Data: " + empData.toString());
 	 employeePayrollList.add(empData);
-	 return empData;
+	 return employeeRepository.save(empData);
 	}
-
+	@Override
+	public List<EmployeePayrollData> getEmployeesByDepartment(String department){
+		return employeeRepository.findEmployeesByDepartment(department);
+	}
 	@Override
 	public EmployeePayrollData updateEmployeePayrollData(int empID,EmployeePayrollDTO empPayrollDTO) {
 		EmployeePayrollData empData = this.getEmployeePayrollDataById(empID);
-		empData.setName(empPayrollDTO.name);
-		empData.setSalary(empPayrollDTO.salary);
-		employeePayrollList.set(empID-1, empData);
-		return empData;
+		empData.updateEmployeePayrollData(empPayrollDTO) ;
+		return employeeRepository.save(empData);
 	}
 
 	@Override
 	public void deleteEmployeePayrollData(int empID) {
-		employeePayrollList.remove(empID-1);
+		EmployeePayrollData empData = this.getEmployeePayrollDataById(empID);
+		employeeRepository.delete(empData);
 		
 	}
 	
